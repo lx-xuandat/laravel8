@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = Auth::user();
+
+    return view('homepage', ['user' => $user]);
 });
 
 Route::get('/php2008', function () {
-    // $appName = env('APP_NAMEXXX', 'gnv');
-    // $appName = config('app.gnv');
-    // dd($appName);
     return view('git_tutorial');
 });
+Route::get('/test', function () {
+    return view('test.greeting', ['name' => 'Giang']);
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
