@@ -26,7 +26,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        dd('php2009');
+        return view('products.create', [
+            'user' => auth()->user(),
+        ]);
     }
 
     /**
@@ -37,7 +39,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputData = $request->all();
+
+        $product = Product::create([
+            'user_id' => 1,
+            'name' => $inputData['name'],
+            'price' => $inputData['price'],
+            'quantity' => $inputData['quantity'],
+            'description' => $inputData['description'],
+        ]);
+
+        return redirect('/products/' . $product->id);
     }
 
     /**
@@ -48,10 +60,12 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return view('products.show', [
+        $data = [
             'product' => Product::findOrFail($id),
             'user' => auth()->user(),
-        ]);
+        ];
+
+        return view('products.show', $data);
     }
 
     /**
