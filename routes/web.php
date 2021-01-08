@@ -32,4 +32,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::resource('products', ProductController::class);
+Route::middleware(['auth', 'checkAdmin'])->group(function () {
+    Route::get('/products/create', [ProductController::class, 'create']);
+    Route::post('/products', [ProductController::class, 'store']);
+});
+
+Route::resource('products', ProductController::class)->except([
+    'create', 'store'
+]);

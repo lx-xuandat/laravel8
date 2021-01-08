@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -39,17 +40,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $inputData = $request->all();
-
-        $product = Product::create([
-            'user_id' => 1,
-            'name' => $inputData['name'],
-            'price' => $inputData['price'],
-            'quantity' => $inputData['quantity'],
-            'description' => $inputData['description'],
+        $validated = $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'quantity' => 'required|numeric',
         ]);
 
-        return redirect('/products/' . $product->id);
+        $inputData = $request->all();
+
+        try {
+            $product = Product::create([
+                'user_id' => auth()->id(),
+                'name' => $inputData['name'],
+                'price' => $inputData['price'],
+                'quantity' => $inputData['quantity'],
+                'description' => $inputData['description'],
+            ]);
+
+            return redirect('/products/' . $product->id);
+        } catch (\Throwable $th) {
+            return back()->with('status', 'Create failed!');;
+        }
     }
 
     /**

@@ -78,9 +78,24 @@
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
+
             <div class="row">
             <div class="checkout__form">
                 <h4>Create Product</h4>
+                @if (session('status'))
+                    <div class="alert alert-danger">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="/products" method="POST">
                     @csrf
                     <div class="row">
