@@ -82,7 +82,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        $data = [
+            'user' => auth()->user(),
+            'product' => $product,
+        ];
+
+        return view('products.edit', $data);
     }
 
     /**
@@ -94,7 +100,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd('ok');
     }
 
     /**
