@@ -100,7 +100,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('ok');
+        $inputData = $request->all();
+        $product = Product::find($id);
+
+        try {
+            $product->update([
+                'name' => $inputData['name'],
+                'price' => $inputData['price'],
+                'quantity' => $inputData['quantity'],
+                'description' => $inputData['description'],
+            ]);
+
+            return redirect('/products/' . $product->id);
+        } catch (\Throwable $th) {
+            return back()->with('status', 'Update failed!');;
+        }
     }
 
     /**

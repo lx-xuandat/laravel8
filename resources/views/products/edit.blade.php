@@ -96,7 +96,8 @@
                         </ul>
                     </div>
                 @endif
-                <form action="/products/{{ $product->id }}" method="PUT">
+                <form action="/products/{{ $product->id }}" method="POST">
+                    {{ method_field('PUT') }}
                     @csrf
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
