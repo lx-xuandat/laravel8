@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CustomDes;
 
 class StoreProductRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class StoreProductRequest extends FormRequest
             'name' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
+            'description' => [new CustomDes],
         ];
     }
 
