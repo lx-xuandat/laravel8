@@ -106,6 +106,11 @@
                             </div>
 
                             <div class="checkout__input">
+                                <p>Code<span>*</span></p>
+                                <input type="text" name="code">
+                            </div>
+
+                            <div class="checkout__input">
                                 <p>Price<span>*</span></p>
                                 <input type="text" name="price">
                             </div>

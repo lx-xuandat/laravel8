@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\CustomDes;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -24,12 +25,22 @@ class StoreProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required',
+            'code' => 'required|unique:products',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
             'description' => [new CustomDes],
         ];
+
+        if ($this->method() == 'PUT') {
+            $rules['code'] = [
+                'required',
+                Rule::unique('products')->ignore($this->product),
+            ];
+        }
+
+        return $rules;
     }
 
     /**

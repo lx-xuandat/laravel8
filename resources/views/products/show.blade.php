@@ -109,9 +109,7 @@
                             <span>(18 reviews)</span>
                         </div>
                         <div class="product__details__price">${{ $product->price }}</div>
-                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                        <p>{{ $product->description }}</p>
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -121,6 +119,13 @@
                         </div>
                         <a href="#" class="primary-btn">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+
+                        @if(auth()->id() == $product->user_id)
+                        <p>
+                            <a href="{{ route('products.edit', ['product' => $product->id]) }}" class="primary-btn">Edit</a>
+                        </p>
+                        @endif
+
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>

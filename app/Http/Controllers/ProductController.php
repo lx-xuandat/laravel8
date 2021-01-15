@@ -41,16 +41,18 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $inputData = $request->all();
+        $inputData = $request->only([
+            'name',
+            'code',
+            'price',
+            'quantity',
+            'description',
+        ]);
 
         try {
-            $product = Product::create([
-                'user_id' => auth()->id(),
-                'name' => $inputData['name'],
-                'price' => $inputData['price'],
-                'quantity' => $inputData['quantity'],
-                'description' => $inputData['description'],
-            ]);
+            $product = Product::create(array_merge($inputData, [
+                'user_id' => auth()->id()
+            ]));
 
             return redirect('/products/' . $product->id);
         } catch (\Throwable $th) {
@@ -98,7 +100,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, $id)
     {
         $inputData = $request->all();
         $product = Product::find($id);
