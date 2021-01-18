@@ -85,6 +85,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+        if (!$product) {
+            abort(404);
+        }
+
         $data = [
             'user' => auth()->user(),
             'product' => $product,
@@ -127,6 +131,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        try {
+            $product->delete();
+
+            return redirect('/products')->with('status', 'Delete Success!');
+        } catch (\Throwable $th) {
+            return back()->with('status', 'Delete Failure!');
+        }
     }
 }

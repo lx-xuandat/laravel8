@@ -124,6 +124,15 @@
                         <p>
                             <a href="{{ route('products.edit', ['product' => $product->id]) }}" class="primary-btn">Edit</a>
                         </p>
+                        <p>
+                            <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="primary-btn">Delete</button>
+                            </form>
+
+                        </p>
                         @endif
 
                         <ul>

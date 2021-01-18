@@ -102,26 +102,28 @@
                         <div class="col-lg-8 col-md-6">
                             <div class="checkout__input">
                                 <p>Name<span>*</span></p>
-                                <input type="text" name="name">
+                                <input type="text" name="name" value="{{ old('name') }}">
                             </div>
 
                             <div class="checkout__input">
                                 <p>Code<span>*</span></p>
-                                <input type="text" name="code">
+                                <input type="text" name="code" value="{{ old('code') }}">
                             </div>
 
                             <div class="checkout__input">
                                 <p>Price<span>*</span></p>
-                                <input type="text" name="price">
+                                <input type="text" name="price" value="{{ old('price') }}">
                             </div>
                             <div class="checkout__input">
                                 <p>Quantity<span>*</span></p>
-                                <input type="text" placeholder="Quantity" class="checkout__input__add" name="quantity">
+                                <input type="text" placeholder="Quantity" class="checkout__input__add" name="quantity" value="{{ old('quantity') }}">
                             </div>
 
                             <div class="checkout__input">
                                 <p>Description</p>
-                                <textarea placeholder="Product detail" name="description"></textarea>
+                                <textarea placeholder="Product detail" name="description">
+                                    {{ old('description') }}
+                                </textarea>
                             </div>
 
                             <div class="checkout__input text-center">

@@ -103,26 +103,26 @@
                         <div class="col-lg-8 col-md-6">
                             <div class="checkout__input">
                                 <p>Name<span>*</span></p>
-                                <input type="text" name="name" value="{{ $product->name }}">
+                                <input type="text" name="name" value="{{ old('name', $product->name) }}">
                             </div>
 
                             <div class="checkout__input">
                                 <p>Code<span>*</span></p>
-                                <input type="text" name="code" value="{{ $product->code }}">
+                                <input type="text" name="code" value="{{ old('code', $product->code) }}">
                             </div>
 
                             <div class="checkout__input">
                                 <p>Price<span>*</span></p>
-                                <input type="text" name="price" value="{{ $product->price }}">
+                                <input type="text" name="price" value="{{ old('price', $product->price) }}">
                             </div>
                             <div class="checkout__input">
                                 <p>Quantity<span>*</span></p>
-                                <input type="text" placeholder="Quantity" class="checkout__input__add" name="quantity" value="{{ $product->quantity }}">
+                                <input type="text" placeholder="Quantity" class="checkout__input__add" name="quantity" value="{{ old('quantity', $product->quantity) }}">
                             </div>
 
                             <div class="checkout__input">
                                 <p>Description</p>
-                                <textarea placeholder="Product detail" name="description">{{ $product->description }}</textarea>
+                                <textarea placeholder="Product detail" name="description">{{ old('description', $product->description) }}</textarea>
                             </div>
 
                             <div class="checkout__input text-center">
