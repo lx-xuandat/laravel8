@@ -16,9 +16,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('homepage', [
+        $products = Product::paginate(1);
+        $data = [
             'user' => auth()->user(),
-        ]);
+            'products' => $products,
+        ];
+
+        return view('products.index', $data);
     }
 
     /**

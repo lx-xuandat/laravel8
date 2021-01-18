@@ -7,3 +7,5 @@
 <link rel="stylesheet" href="/ogani/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="/ogani/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/ogani/css/style.css" type="text/css">
+
+@yield('style')
