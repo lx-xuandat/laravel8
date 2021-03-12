@@ -120,11 +120,12 @@
                         <a href="#" class="primary-btn add-to-card" data-product_id="{{ $product->id }}">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
 
-                        @if(auth()->id() == $product->user_id)
-                        <p>
-                            <a href="{{ route('products.edit', ['product' => $product->id]) }}" class="primary-btn">Edit</a>
-                        </p>
-                        <p>
+                        @if (auth()->id() == $product->user_id)
+                            <p>
+                                <a href="{{ route('products.edit', ['product' => $product->id]) }}"
+                                    class="primary-btn">Edit</a>
+                            </p>
+                            <p>
                             <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -132,7 +133,7 @@
                                 <button type="submit" class="primary-btn">Delete</button>
                             </form>
 
-                        </p>
+                            </p>
                         @endif
 
                         <ul>
@@ -180,7 +181,7 @@
                                         elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
                                         et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
                                         vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
+                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
                                         ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
                                         elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
                                         porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
@@ -314,37 +315,39 @@
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('.add-to-card').click(function(event) {
-            event.preventDefault();
-
-            var product_id = $(this).data('product_id');
-            var quantity = $('.product-quantity').val();
-
-            var url = '/orders';
-
-            $.ajax(url, {
-                type: 'POST',
-                data: {
-                    product_id: product_id,
-                    quantity: quantity,
-                },
-                success: function (data) {
-                    console.log('success');
-                },
-                error: function () {
-                    console.log('fail');
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            $('.add-to-card').click(function(event) {
+                event.preventDefault();
+
+                var product_id = $(this).data('product_id');
+                var quantity = $('.product-quantity').val();
+
+                var url = '/orders';
+
+                $.ajax(url, {
+                    type: 'POST',
+                    dataType: "JSON",
+                    data: {
+                        product_id: product_id,
+                        quantity: quantity,
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
         });
 
-    });
-</script>
+    </script>
 @endsection

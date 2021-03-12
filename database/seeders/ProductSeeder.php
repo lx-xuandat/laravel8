@@ -15,13 +15,46 @@ class ProductSeeder extends Seeder
     public function run()
     {
         Product::truncate();
+        $products = [
+            [
+                'user_id' => 1,
+                'name' => 'Bap Cai',
+                'price' => 100,
+                'quantity' => 1000,
+                'description' => 'Bap Cai Xanh',
+            ],
+            [
+                'user_id' => 1,
+                'name' => 'Xu Hao',
+                'price' => 56000,
+                'quantity' => 1000,
+                'description' => 'Su Hao Da Lat',
+            ],
+            [
+                'user_id' => 1,
+                'name' => 'Ca rot',
+                'price' => 10010,
+                'quantity' => 100,
+                'description' => 'Ca Rot Huu Co',
+            ],
+            [
+                'user_id' => 1,
+                'name' => 'Ca Chua',
+                'price' => 19000,
+                'quantity' => 100,
+                'description' => 'Ca Chua Huu Co',
+            ],
+            [
+                'user_id' => 1,
+                'name' => 'Khoai Tay',
+                'price' => 910000,
+                'quantity' => 1000,
+                'description' => 'Khoai Tay',
+            ],
+        ];
 
-        Product::create([
-            'user_id' => 1,
-            'name' => 'Seeder test',
-            'price' => 10,
-            'quantity' => 100,
-            'description' => 'Description',
-        ]);
+        foreach ($products as $product) {
+            Product::create($product);
+        }
     }
 }
