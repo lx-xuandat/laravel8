@@ -340,6 +340,9 @@
                     },
                     success: function(response) {
                         console.log(response);
+                        alert(
+                            response['message']
+                        )
                     },
                     error: function(xhr) {
                         console.log(xhr.responseText);

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use App\Models\ProductOrder;
 
 class ProductSeeder extends Seeder
 {
@@ -56,5 +57,7 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             Product::create($product);
         }
+
+        Product::factory()->count(1000)->create();
     }
 }

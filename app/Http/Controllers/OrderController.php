@@ -6,11 +6,23 @@ use App\Models\Order;
 use App\Models\Product;
 use \Illuminate\Http\Request;
 use App\Models\ProductOrder;
-
-use function PHPUnit\Framework\isNull;
-
+use Illuminate\Support\Facades\Log;
 class OrderController extends Controller
 {
+    public const stDungBan = 0;
+    public const msgDungBan = 'Mat Hang Nay Dang Tam Dung Kinh Doanh';
+
+    public const success = 1;
+    public const msgSuccess = 'Them Vao Gio Hang Thanh Cong';
+
+    public const stHetHang = 2;
+    public const msgHetHang = 'Mat Hang Nay Dang Tam Het';
+
+    public const stThieuHang = 21;
+    public const msgThieuHang = 'So Luong Hang Yeu Cau Khong Du';
+
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -34,7 +46,8 @@ class OrderController extends Controller
 
         if (!$product) {
             return response()->json([
-                'exception' => 'So Luong Hang Ton Khong The Dap Ung',
+                'status' => self::stHetHang,
+                'message' => self::msgHetHang,
             ]);
         }
 
@@ -50,8 +63,8 @@ class OrderController extends Controller
             try {
                 $order = Order::create($order);
             } catch (\Throwable $th) { // phien ban cu sd exception
-                \Log::info('create order failed');
-                \Log::info($th);
+                Log::info('create order failed');
+                Log::info($th);
             }
         }
 
@@ -69,19 +82,31 @@ class OrderController extends Controller
                     'price' => $product->price,
                 ]);
             } catch (\Throwable $th) {
-                \Log::info('create ProductOrder failed');
+                Log::info('create ProductOrder failed');
+                Log::info($th);
             }
-            return response()->json([$item, $order]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Da Them Vao Gio Hang',
+                $item,
+                $order,
+            ]);
         }
 
         // 3.2 Kiem Tra hang ton kho va Cap nhat so luong hang trong gio
         $item->quantity += $input['quantity'];
         if ($product->quantity < $item->quantity) {
             return response()->json([
-                'exception' => 'So Luong Hang Ton Khong The Dap Ung',
+                'status' => self::stHetHang,
+                'message' => self::msgHetHang,
             ]);
         }
         $item->save();
-        return response()->json([$item, $order]);
+        return response()->json([
+            'status' => self::success,
+            'message' => self::msgSuccess,
+            $item,
+            $order,
+        ]);
     }
 }
