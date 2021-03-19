@@ -315,6 +315,7 @@
 @endsection
 
 @section('script')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -339,10 +340,23 @@
                         quantity: quantity,
                     },
                     success: function(response) {
-                        console.log(response);
-                        alert(
-                            response['message']
-                        )
+                        if (response.status == 1) {
+                            swal({
+                                title: "Success!",
+                                text: response.message,
+                                icon: "success",
+                                button: "Oki!",
+                            });
+                            $('.fa-shopping-bag').parent().children('span').text(response
+                                .totals)
+                        } else {
+                            swal({
+                                title: 'Fail!',
+                                text: response.message,
+                                icon: "error",
+                                button: "Oki!",
+                            });
+                        }
                     },
                     error: function(xhr) {
                         console.log(xhr.responseText);

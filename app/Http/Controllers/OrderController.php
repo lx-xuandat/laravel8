@@ -7,6 +7,7 @@ use App\Models\Product;
 use \Illuminate\Http\Request;
 use App\Models\ProductOrder;
 use Illuminate\Support\Facades\Log;
+
 class OrderController extends Controller
 {
     public const stDungBan = 0;
@@ -20,8 +21,6 @@ class OrderController extends Controller
 
     public const stThieuHang = 21;
     public const msgThieuHang = 'So Luong Hang Yeu Cau Khong Du';
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -51,7 +50,7 @@ class OrderController extends Controller
             ]);
         }
 
-        // 2. lay thong tin dat hang cua khach
+        // 2. lay thong tin order cua khach
         $order = Order::where('user_id', $customerID)->where('status', 1)->first();
         // 2.1 tao gio hang cho khach
         if (!$order) {
@@ -72,7 +71,7 @@ class OrderController extends Controller
         $item = ProductOrder::where('product_id', $input['product_id'])
             ->where('order_id', $order->id)->first();
 
-        // 3.1 Kiem Tra hang ton kho va Then hang vao gio
+        // 3.1 Kiem Tra hang ton kho va Them hang vao gio
         if (!$item) {
             try {
                 $item = ProductOrder::create([
@@ -105,6 +104,7 @@ class OrderController extends Controller
         return response()->json([
             'status' => self::success,
             'message' => self::msgSuccess,
+            'totals' => $item->totals(),
             $item,
             $order,
         ]);

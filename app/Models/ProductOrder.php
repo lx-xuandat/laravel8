@@ -13,4 +13,9 @@ class ProductOrder extends Model
         'quantity',
         'price',
     ];
+
+    public function totals()
+    {
+        return $this->where('order_id', $this->order_id)->sum('quantity');
+    }
 }
